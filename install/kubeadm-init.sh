@@ -1,14 +1,16 @@
 #!/bin/bash
 
 echo "Initializing kubeadm init"
+read -p "Enter the ip of controller node: " controller-ip
+
 # Create kubeadm-config.yaml
 cat << 'EOF' > /usr/local/kubeadm-config.yaml
 kind: ClusterConfiguration
 apiVersion: kubeadm.k8s.io/v1beta3
 kubernetesVersion: v1.24.0
-# controlPlaneEndpoint: <ip/dns> # --control-plane-endpoint (load balancer ip/dns)
 networking:
-  podSubnet: "10.240.0.0/24" # --pod-network-cidr
+  podSubnet: "$controller-ip" # --pod-network-cidr
+# controlPlaneEndpoint: <ip/dns> # --control-plane-endpoint (load balancer ip/dns)
 ---
 kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1

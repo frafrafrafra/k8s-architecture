@@ -9,7 +9,7 @@ kind: ClusterConfiguration
 apiVersion: kubeadm.k8s.io/v1beta3
 kubernetesVersion: v1.24.0
 networking:
-  podSubnet: "${controller_ip}" # --pod-network-cidr
+  podSubnet: "${controller_ip}/24" # --pod-network-cidr
 # controlPlaneEndpoint: <ip/dns> # --control-plane-endpoint (load balancer ip/dns)
 ---
 kind: KubeletConfiguration

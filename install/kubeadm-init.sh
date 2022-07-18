@@ -1,7 +1,8 @@
 #!/bin/bash
 
 echo "Initializing kubeadm init"
-read -p "Enter the ip of controller node: " controller_ip
+# Get current node ip
+controller_ip=$(hostname -I | awk '{print $1}')
 
 # Create kubeadm-config.yaml
 cat << EOF > ./kubeadm-config.yaml
@@ -16,8 +17,8 @@ kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
 cgroupDriver: systemd
 EOF
-
 echo " "
+
 sudo kubeadm init --config=./kubeadm-config.yaml
 
 mkdir -p $HOME/.kube

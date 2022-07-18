@@ -22,6 +22,3 @@ kubeadm join <controller-ip>:6443 --token <get-token> \
 	--discovery-token-ca-cert-hash sha256:<sha256>
 
 ### ########################################################### ###
-
-# Commands after node succesfully joins cluster:
-kubectl -n kube-system rollout restart deployment coredns

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd /usr/local
 sudo apt update -y && sudo apt upgrade -y
 
 echo "Downloading and installing containerd."
@@ -9,18 +10,20 @@ echo " "
 echo "Step 1: Installing containerd."
 wget -O /usr/local/containerd.tar.gz https://github.com/containerd/containerd/releases/download/v1.6.6/containerd-1.6.6-linux-amd64.tar.gz
 tar Cxzvf /usr/local /usr/local/containerd.tar.gz
-
+ 
 wget -O /usr/local/containerd.service https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
-mkdir /usr/local/lib/systemd/ && mkdir /usr/local/lib/systemd/system/
+mkdir -p /usr/local/lib/systemd/system/
 mv /usr/local/containerd.service /usr/local/lib/systemd/system/
-systemctl daemon-reload && systemctl enable --now containerd
+
+systemctl daemon-reload
+systemctl enable --now containerd
 echo " "
 
 echo "Step 2: Installing runc."
-wget -O /usr/local/runc.amd64 https://github.com/opencontainers/runc/releases/download/v1.1.3/runc.amd64
+wget -O /usr/local/runc.amd64 https://github.com/opencontainers/runc/releases/download/v1.1.4/runc.amd64
 install -m 755 /usr/local/runc.amd64 /usr/local/sbin/runc
 
-wget -O /usr/local/cni-plugins.tgz https://github.com/containernetworking/plugins/releases/download/v1.1.1/cni-plugins-linux-amd64-v1.1.1.tgz
+wget -O /usr/local/cni-plugins.tgz https://github.com/containernetworking/plugins/releases/download/v1.2.0/cni-plugins-linux-amd64-v1.2.0.tgz
 mkdir -p /opt/cni/bin && tar Cxzvf /opt/cni/bin /usr/local/cni-plugins.tgz
 echo " "
 

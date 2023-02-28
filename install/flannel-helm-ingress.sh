@@ -2,7 +2,7 @@
 
 echo "Installing flannel network"
 wget -O /usr/local/kube-flannel.yml https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
-sed -i 's#10.244.0.0/16#10.240.0.0/24#g' /usr/local/kube-flannel.yml
+# sed -i 's#10.244.0.0/16#10.240.0.0/24#g' /usr/local/kube-flannel.yml
 kubectl apply -f /usr/local/kube-flannel.yml
 kubectl get pods --all-namespaces
 
@@ -17,11 +17,10 @@ echo "Install the Helm (v3) chart for nginx ingress controller"
 helm repo add nginx-stable https://helm.nginx.com/stable
 helm repo update
 
-helm upgrade --install app-ingress nginx-stable/nginx-ingress \
+# helm upgrade --install ...
+helm install app-ingress nginx-stable/nginx-ingress \
      --namespace ingress \
      --create-namespace \
-     --set controller.replicaCount=2 \
-     --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
-     --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux
+     --set controller.replicaCount=2
 
 exit

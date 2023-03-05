@@ -12,6 +12,7 @@ kubernetesVersion: v1.26.0
 networking:
   podSubnet: "10.244.0.0/16" # --pod-network-cidr
 # controlPlaneEndpoint: <ip/dns> # --control-plane-endpoint (load balancer ip/dns)
+clusterName: "k8s-cluster"
 ---
 kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1

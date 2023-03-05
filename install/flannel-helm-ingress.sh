@@ -14,12 +14,12 @@ sudo apt-get update
 sudo apt-get install helm
 
 echo "Install the Helm (v3) chart for nginx ingress controller"
-helm repo add nginx-stable https://helm.nginx.com/stable
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 
 # helm upgrade --install ...
-helm install app-ingress nginx-stable/nginx-ingress \
-     --namespace ingress \
+helm install ingress ingress-nginx/ingress-nginx \
+     --namespace ingress-nginx \
      --create-namespace \
      --set controller.replicaCount=2
 

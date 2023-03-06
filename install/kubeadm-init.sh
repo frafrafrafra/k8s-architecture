@@ -6,17 +6,27 @@ controller_ip=$(hostname -I | awk '{print $1}')
 
 # Create kubeadm-config.yaml
 cat << EOF > /usr/local/kubeadm-config.yaml
+apiServer:
+  extraArgs:
+    cloud-provider: aws
+controllerManager:
+  extraArgs:
+    cloud-provider: aws
+    configure-cloud-routes: 'false'
 kind: ClusterConfiguration
 apiVersion: kubeadm.k8s.io/v1beta3
 kubernetesVersion: v1.26.0
 networking:
-  podSubnet: "10.244.0.0/16" # --pod-network-cidr
+  podSubnet: "10.244.0.0/16" # --pod-network-cidr (pod subnet matching cni config)
 # controlPlaneEndpoint: <ip/dns> # --control-plane-endpoint (load balancer ip/dns)
 clusterName: "k8s-cluster"
 ---
 kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
 cgroupDriver: systemd
+nodeRegistration:
+  kubeletExtraArgs:
+    cloud-provider: aws
 EOF
 echo " "
 
